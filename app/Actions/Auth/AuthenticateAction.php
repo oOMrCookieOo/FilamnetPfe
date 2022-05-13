@@ -59,10 +59,10 @@ class AuthenticateAction
         if (!Customer::query()->where('uuid',request()->uuid)->exists()){
             return [
                 'uuid' => 'required|unique:customers,uuid|string|max:255',
-                'first_name' => 'required|string|max:40',
-                'last_name' => 'required|string|max:40',
-                'email' => 'required|string|email|unique:customers',
-                'phone' => 'required|string|unique:customers',
+                'first_name' => 'nullable|sometimes|string|max:40',
+                'last_name' => 'nullable|sometimes|string|max:40',
+                'email' => 'nullable|sometimes|string|email|unique:customers',
+                'phone' => 'nullable|sometimes|string|unique:customers',
             ];
         }
         return  [
