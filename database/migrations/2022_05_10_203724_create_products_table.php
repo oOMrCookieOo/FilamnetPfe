@@ -18,11 +18,15 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug')->nullable()->unique('products_slug_unique');
             $table->string('sku')->nullable()->unique('products_sku_unique');
+            $table->string('barcode')->unique()->nullable();
             $table->longText('description')->nullable();
+            $table->unsignedBigInteger('qty')->default(0);
+            $table->unsignedBigInteger('security_stock')->default(0);
             $table->boolean('featured')->default(false);
             $table->boolean('is_visible')->default(false);
-            $table->integer('old_price')->nullable();
-            $table->integer('price')->nullable();
+            $table->decimal('old_price', 10, 2)->nullable();
+            $table->decimal('price', 10, 2)->nullable();
+            $table->decimal('cost', 10, 2)->nullable();
             $table->dateTime('published_at')->nullable();
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();

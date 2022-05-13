@@ -15,10 +15,10 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->double('total')->default(0);
+            $table->double('total_price')->default(0);
             $table->double('sub_total')->default(0);
             $table->string('tracking_code', 191)->nullable()->index();
-            $table->enum('status', ['pending', 'canceled', 'confirmed', 'completed'])->default('pending');
+            $table->enum('status', ['new', 'processing', 'shipped', 'delivered','cancelled'])->default('new');
             $table->foreignId('customer_id')->nullable()->constrained('customers')->cascadeOnDelete();
             $table->foreignId('address_id')->nullable()->constrained('customer_addresses')->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();

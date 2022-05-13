@@ -18,12 +18,11 @@ class CreateBrandsTable extends Migration
             $table->string('name');
             $table->string('slug')->unique('brands_slug_unique');
             $table->longText('description')->nullable();
-            $table->unsignedSmallInteger('position')->default('0');
+            $table->unsignedSmallInteger('position')->nullable()->default('0');
             $table->boolean('is_visible')->default(false);
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

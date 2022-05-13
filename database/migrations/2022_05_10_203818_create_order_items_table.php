@@ -18,8 +18,8 @@ class CreateOrderItemsTable extends Migration
             $table->string('name')->nullable()->comment('The product name at the moment of buying');
             $table->string('sku')->nullable()->index();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
-            $table->integer('quantity');
-            $table->integer('unit_price_amount');
+            $table->integer('qty');
+            $table->integer('unit_price');
             $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->timestamps();
         });
