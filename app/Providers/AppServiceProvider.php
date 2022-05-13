@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $logo='logo.PNG';
+        $logo='logo.png';
         $manifest='/manifest.json';
         Filament::pushMeta([
             new HtmlString('<meta name="theme-color" content="#6777ef"/>'),
