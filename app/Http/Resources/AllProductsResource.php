@@ -23,7 +23,7 @@ class AllProductsResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'description' => html_entity_decode($this->description),
-            'available_in_stock' => $this->quantity > 0,
+            'available_in_stock' => $this->qty > 0,
             'image' => $this->getFirstMedia('product-images')->getFullUrl(),
             'price' => $this->price,
             'brand' => $this->brand->name,
