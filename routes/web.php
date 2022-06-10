@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('filament.pages.dashboard');
 });
+Route::get('login', function () {
+    return redirect()->route('filament.pages.dashboard');
+})->name('login');

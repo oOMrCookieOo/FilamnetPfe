@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DiscountResource\Pages;
 use App\Models\Discount;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -30,10 +31,12 @@ class DiscountResource extends Resource
             ->schema([
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\TextInput::make('code')
-                            ->helperText('Customers will enter this discount code at checkout.')
+                        Forms\Components\BelongsToSelect::make('product_id')
+                            ->label('Product')
+                            ->searchable()
+                            ->relationship('product','name')
                             ->required()
-                            ->unique(Discount::class, 'code', fn($record) => $record)
+                            ->unique(Discount::class, 'product_id', fn($record) => $record)
                             ->columnSpan([
                                 'sm' => 2,
                             ]),

@@ -103,10 +103,7 @@ class ProductResource extends Resource
                     $layout::make()
                         ->schema([
                             SpatieMediaLibraryFileUpload::make('media')
-                                ->collection('product-images')
-                                ->multiple()
-                                ->minFiles(2)
-                                ->maxFiles(5),
+                                ->collection('product-images'),
                         ])
                         ->columns(1),
                     $layout::make()
