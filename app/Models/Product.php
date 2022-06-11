@@ -95,8 +95,9 @@ class Product extends Model implements HasMedia
     {
         return $query->where('is_visible', 1)
             ->where(function ($query) {
-                $query->whereNull('published_at')
-                    ->orWhere('published_at', '>=', Carbon::now()->format('Y-m-d'));
+                //$query->whereNull('published_at')
+                //    ->orWhere('published_at', '>=', Carbon::now()->format('Y-m-d'))
+                ;
             });
     }
 
