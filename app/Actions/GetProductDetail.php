@@ -14,6 +14,6 @@ class GetProductDetail
     public function handle(Product $product)
     {
 
-        return new GetProductResource($product);
+        return[ new GetProductResource($product)];
     }
 }

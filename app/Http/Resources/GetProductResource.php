@@ -15,10 +15,11 @@ class GetProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        $related=Product::query()->whereHas('categories',function ($query){
-            $query->where('categories.id',$this->categories()->first()->id)
-                ->orWhereHas('parent',function ($query){
-                    $query->where('categories.parent_id',$this->categories()->first()->id);
+        $ids=[$this->categories()->first()->id,$this->categories()->first()->parent_id];
+        $related=Product::query()->whereHas('categories',function ($query) use ($ids){
+            $query->whereIn('categories.id',$ids)
+                ->orWhereHas('parent',function ($query) use ($ids){
+                    $query->whereIn('categories.parent_id',$ids);
                 });
         })->take(10)->get();
         return [
