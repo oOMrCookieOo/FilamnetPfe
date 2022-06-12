@@ -101,6 +101,30 @@ class Product extends Model implements HasMedia
             });
     }
 
+    public function scopeLikeName($query,$term):Builder
+    {
+
+        return $query->where('name','like',"%$term%");
+    }
+
+    public function scopeLikeBrandName($query,$term):Builder
+    {
+
+        return $query->OrwhereRelation('brand','brands.name','like',"%$term%");
+    }
+
+    public function scopeLikeCategoryName($query,$term):Builder
+    {
+
+        return $query->OrwhereHas('categories',function ($query)use ($term){
+           $query->where('name','like',"%$term%")
+               ->orWhereHas('parent',function ($query)use ($term){
+                   $query->where('name','like',"%$term%");
+               })
+           ;
+        });
+    }
+
     public function offer()
     {
         return $this->hasOne(Discount::class,'product_id');

@@ -54,22 +54,22 @@ class OrderResource extends Resource
                                     ])
                                     ->required(),
                                 Forms\Components\BelongsToSelect::make('customer_id')
-                                    ->relationship('customer', 'name')
+                                    ->relationship('customer', 'last_name')
                                     ->searchable()
                                     ->reactive()
-                                    ->getSearchResultsUsing(fn (string $query) => Customer::where('phone', 'like', "%{$query}%")->pluck('last_name', 'id'))
-                                    ->getOptionLabelUsing(fn ($value): ?string => Customer::find($value)?->name)
+                                    //->getSearchResultsUsing(fn (string $query) => Customer::where('phone', 'like', "%{$query}%")->pluck('last_name', 'id'))
+                                    //->getOptionLabelUsing(fn ($value): ?string => Customer::find($value)?->name)
                                     ->required(),
-                                Forms\Components\Select::make('address_id')
-                                    ->options(function (callable $get){
+                                Forms\Components\TextInput::make('address')
+                                    /*->options(function (callable $get){
                                         return CustomerAddress::query()->where('customer_id',$get('customer_id'))->pluck('address','id')->toArray();
-                                    })
+                                    })*/
                                     ->dehydrated()
                                     ->required(),
-                                Forms\Components\TextInput::make('discount')
+                               /* Forms\Components\TextInput::make('discount')
                                 ->label('Discount')
                                 ->nullable()
-                                ->dehydrated(),
+                                ->dehydrated(),*/
                                 Forms\Components\MarkdownEditor::make('details')
                                     ->columnSpan([
                                         'sm' => 2,

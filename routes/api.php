@@ -1,7 +1,13 @@
 <?php
 
 use App\Actions\Auth\AuthenticateAction;
+use App\Actions\GetDiscountedProducts;
+use App\Actions\GetNetWorkProducts;
+use App\Actions\GetNewlyArrivedProducts;
+use App\Actions\GetPrintersProducts;
+use App\Actions\GetProductDetail;
 use App\Actions\GetProducts;
+use App\Actions\PlaceOrder;
 use App\Actions\UpdateProfileAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +30,11 @@ Route::get('User', function (Request $request) {
 
 Route::post('Profile', UpdateProfileAction::class)->middleware('auth:sanctum');
 Route::get('GetAllProduct', GetProducts::class);
+Route::get('GetNewlyArrivedProducts', GetNewlyArrivedProducts::class);
+Route::get('GetOffers', GetDiscountedProducts::class);
+Route::get('GetNewtWorkProducts', GetNetWorkProducts::class);
+Route::get('GetPrinterProducts', GetPrintersProducts::class);
+Route::get('products/{product}', GetProductDetail::class);
+Route::get('products', GetProducts::class);
+Route::post('order', PlaceOrder::class)->middleware('auth:sanctum');
+

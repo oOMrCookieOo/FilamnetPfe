@@ -24,7 +24,7 @@ class AllProductsResource extends JsonResource
             'slug' => $this->slug,
             'description' => html_entity_decode($this->description),
             'available_in_stock' => $this->qty > 0,
-            'image' => $this->getFirstMedia('product-images')->getFullUrl(),
+            'image' => $this->getFirstMedia('product-images')?->getFullUrl(),
             'price' => $this->price,
             'brand' => $this->brand->name,
             'category' => [
@@ -37,16 +37,27 @@ class AllProductsResource extends JsonResource
             ],
             'comments' => ProductCommentsResrouce::collection($this->comments),
             'has_offer' => (bool)$this->offer,
-            'offer' => $this->getNewPrice($this->price, $this->offer)
+            'offer' => $this->offer?$this->getNewPrice($this->price, $this->offer):[]
         ];
     }
 
 
     private function getNewPrice($old_price, $offer)
     {
+
+        if ($offer->type==="fixed_amount"){
+            $new_price=$old_price-$offer->value;
+            $percentage=100-intval(($new_price*100)/$old_price);
+
+        }else{
+            $new_price=$old_price-intval($offer->value*$old_price)/100;
+            $percentage=intval($offer->value);
+
+        }
+
         return [
-            'price'=>0,
-            'percentage'=>0
+            'price'=>$new_price,
+            'percentage'=>$percentage
         ];
     }
 }

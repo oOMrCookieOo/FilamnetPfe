@@ -4,6 +4,7 @@ namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
 use App\Models\Discount;
+use App\Models\Product;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateOrder extends CreateRecord
@@ -14,16 +15,29 @@ class CreateOrder extends CreateRecord
     {
         $total = 0;
         foreach ($data['items'] as $item) {
-            $total += $item['unit_price'] * $item['qty'];
+            $new_price = $this->getNewPrice($item);
+            $total += $new_price * $item['qty'];
         }
-        $discount=0;
 
-        if ($data['discount']){
-            $discount=Discount::query()->where('code',$data['discount'])->first()?->value;
-        }
-        $data['total_price'] = $total-$discount;
+        $data['total_price'] = $total;
+        $data['sub_total'] = $total;
         $data['user_id']=auth()->id();
 
         return $data;
+    }
+
+    private function getNewPrice($product)
+    {
+        $product=Product::query()->find($product['product_id']);
+        if ($product->offer) {
+            if ($product->offer->type === "fixed_amount") {
+                $new_price = $product->price - $product->offer->value;
+            } else {
+                $new_price = $product->price - intval($product->offer->value * $product->price) / 100;
+            }
+        } else {
+            $new_price = $product->price;
+        }
+        return $new_price;
     }
 }
