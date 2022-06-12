@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Http\Resources\AllProductsResource;
+use App\Http\Resources\GetProductResource;
 use App\Models\Product;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -13,6 +14,6 @@ class GetProductDetail
     public function handle(Product $product)
     {
 
-        return new AllProductsResource($product);
+        return new GetProductResource($product);
     }
 }
