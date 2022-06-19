@@ -67,6 +67,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
  * @method static Builder|Product whereSlug($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read Collection|\App\Models\Comment[] $comments
+ * @property-read int|null $comments_count
+ * @property-read \App\Models\Discount|null $offer
+ * @method static Builder|Product likeBrandName($term)
+ * @method static Builder|Product likeCategoryName($term)
+ * @method static Builder|Product likeName($term)
  */
 class Product extends Model implements HasMedia
 {
@@ -88,7 +94,7 @@ class Product extends Model implements HasMedia
 
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class, 'product_id');
+        return $this->hasMany(Comment::class, 'product_id')->where('is_visible',true);
     }
 
     public function scopeVisible($query):Builder
@@ -110,18 +116,17 @@ class Product extends Model implements HasMedia
     public function scopeLikeBrandName($query,$term):Builder
     {
 
-        return $query->OrwhereRelation('brand','brands.name','like',"%$term%");
+        return $query->orWhereRelation('brand','brands.name','like',"%$term%");
     }
 
     public function scopeLikeCategoryName($query,$term):Builder
     {
 
-        return $query->OrwhereHas('categories',function ($query)use ($term){
+        return $query->orWhereHas('categories',function ($query)use ($term){
            $query->where('name','like',"%$term%")
                ->orWhereHas('parent',function ($query)use ($term){
                    $query->where('name','like',"%$term%");
-               })
-           ;
+               });
         });
     }
 

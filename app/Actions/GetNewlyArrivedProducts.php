@@ -12,7 +12,7 @@ class GetNewlyArrivedProducts
 
     public function handle()
     {
-        $products=Product::query()->orderByDesc('created_at')->with(['comments.user','categories','offer'])->visible()->take(10)->get();
+        $products=Product::query()->orderByDesc('created_at')->with(['comments.customer','categories','offer'])->visible()->take(10)->get();
         return AllProductsResource::collection($products);
     }
 }

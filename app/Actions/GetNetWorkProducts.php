@@ -16,7 +16,7 @@ class GetNetWorkProducts
             $query->where('categories.id',1)
                 ->orWhere('categories.parent_id',1);
 
-        })->with(['comments.user','categories','offer'])->visible()->take(10)->get();
+        })->with(['comments.customer','categories','offer'])->visible()->take(10)->get();
         return AllProductsResource::collection($products);
     }
 }

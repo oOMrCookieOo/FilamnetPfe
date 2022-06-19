@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CustomerAuthResource extends JsonResource
+class CategoriesResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,13 +14,11 @@ class CustomerAuthResource extends JsonResource
      */
     public function toArray($request)
     {
-        return[
-            'uuid' =>$this->uuid ,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'token'=>null
+        return [
+            'id'=>$this->id,
+            'name'=>$this->name,
+            'has_children'=>$this->children->isNotEmpty(),
+            'children'=> CategoriesResource::collection($this->children)
         ];
     }
 }

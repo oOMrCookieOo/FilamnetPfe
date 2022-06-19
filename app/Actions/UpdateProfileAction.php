@@ -16,10 +16,12 @@ class UpdateProfileAction
        $customer= Auth::user();
        $customer->update($this->getCustomerFields($request));
 
+       $token=$request->bearerToken();
         return response([
             'status' => true,
             'msg' => '',
             'data'=>[
+                'token' => $token,
                 'customer' => new CustomerAuthResource($customer),
             ]
         ]);

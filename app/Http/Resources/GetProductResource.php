@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class GetProductResource extends JsonResource
 {
@@ -26,7 +27,7 @@ class GetProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'description' => html_entity_decode($this->description),
+            'description' => Str::markdown($this->description),
             'available_in_stock' => $this->qty > 0,
             'image' => $this->getFirstMedia('product-images')?->getFullUrl(),
             'price' => $this->price,

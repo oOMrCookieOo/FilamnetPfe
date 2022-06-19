@@ -12,7 +12,7 @@ class GetDiscountedProducts
 
     public function handle()
     {
-        $products=Product::query()->whereHas('offer')->with(['comments.user','categories','offer'])->visible()->take(10)->get();
+        $products=Product::query()->whereHas('offer')->with(['comments.customer','categories','offer'])->visible()->take(10)->get();
         return AllProductsResource::collection($products);
     }
 }

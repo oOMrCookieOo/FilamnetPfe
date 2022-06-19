@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 use JsonSerializable;
 
 class AllProductsResource extends JsonResource
@@ -22,7 +23,7 @@ class AllProductsResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'description' => html_entity_decode($this->description),
+            'description' => Str::markdown($this->description),
             'available_in_stock' => $this->qty > 0,
             'image' => $this->getFirstMedia('product-images')?->getFullUrl(),
             'price' => $this->price,
@@ -60,4 +61,5 @@ class AllProductsResource extends JsonResource
             'percentage'=>$percentage
         ];
     }
+
 }

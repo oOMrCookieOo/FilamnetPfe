@@ -36,6 +36,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Discount whereUsageLimitPerCustomer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Discount whereValue($value)
  * @mixin \Eloquent
+ * @property int $product_id
+ * @property-read \App\Models\Product $product
+ * @method static \Illuminate\Database\Eloquent\Builder|Discount whereProductId($value)
  */
 class Discount extends Model
 {

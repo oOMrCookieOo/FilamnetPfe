@@ -14,14 +14,28 @@ class GetProducts
     public function handle(Request $request)
     {
 
-        $products = Product::query()
+       $products = Product::query()
             ->when($request->filled('key_word'), function ($query) use ($request) {
-                $query->likeName($request->key_word)
-                    ->likeBrandName($request->key_word)
-                    ->likeCategoryName($request->key_word);
+                $query->where(function ($query) use ($request){
+                    $query->likeName($request->key_word)
+                        ->likeBrandName($request->key_word)
+                        ->likeCategoryName($request->key_word)
+                    ;
+                });
+
             })
-            ->with(['comments.user', 'categories', 'offer'])->visible()->get();
+            ->when($request->filled('category'),function ($query)use ($request){
+                    $query->where(function ($query) use ($request){
+                        $query->whereHas('categories',function ($query)use ($request){
+                            $query->where('categories.id',$request->category)
+                                ->orWhere('categories.parent_id',$request->category)
+                            ;
+                        });
+                    });
+            })
+            ->with(['comments.customer', 'categories', 'offer'])->visible()->paginate();
         return AllProductsResource::collection($products);
 
     }
+
 }

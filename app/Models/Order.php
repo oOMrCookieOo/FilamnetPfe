@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  * @mixin \Eloquent
+ * @property string $address
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereAddress($value)
  */
 class Order extends Model
 {
